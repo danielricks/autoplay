@@ -1,0 +1,8 @@
+conceptnetter/
+scholar/
+textplayer/
+*.pyc
+*.py~
+*.txt~
+*.bin
+*.csv
