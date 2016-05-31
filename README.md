@@ -1,2 +1,2 @@
 # autoplay
-Main project files for teaching how to play text-based games
+Main project files for teaching computers how to play text-based games
