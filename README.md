@@ -5,7 +5,7 @@ Main project files for teaching computers how to play text-based games
 
 ## Setup
 
-The following script will install textplayer (Frotz interface), scholar (Word2Vec interface), and conceptnetter (ConceptNet 5 interface) in the autoplay folder.
+The following script will install [textplayer](https://github.com/kingjamesiv/textplayer) (Frotz interface), [scholar](https://github.com/kingjamesiv/scholar) (Word2Vec interface), and [conceptnetter](https://github.com/kingjamesiv/conceptnetter) (ConceptNet 5 interface) in the autoplay folder.
 
 ```bash
 $ ./setup.sh
