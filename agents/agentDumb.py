@@ -8,21 +8,24 @@ class AgentDumb:
 		pass
 
 	def take_action(self, game_text):
-		if rand.random() < 0.4:
-			if rand.random() < 0.25:
+		movement_type = rand.random()
+		if movement_type < 0.4:
+			direction = rand.random()
+			if direction < 0.25:
 				return 'n'
-			elif rand.random() < 0.5:
+			elif direction < 0.5:
 				return 's'
-			elif rand.random() < 0.75:
+			elif direction < 0.75:
 				return 'e'
 			else:
 				return 'w'
-		elif rand.random() < 0.8:
-			if rand.random() < 0.25:
+		elif movement_type < 0.8:
+			direction = rand.random()
+			if direction < 0.25:
 				return 'ne'
-			elif rand.random() < 0.5:
+			elif direction < 0.5:
 				return 'nw'
-			elif rand.random() < 0.75:
+			elif direction < 0.75:
 				return 'se'
 			else:
 				return 'sw'
