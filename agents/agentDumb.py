@@ -1,4 +1,6 @@
 import random as rand
+import scholar.scholar as sch
+import conceptnetter.conceptNetter as cn
 
 class AgentDumb:
 
@@ -7,10 +9,16 @@ class AgentDumb:
 
 	def take_action(self, game_text):
 		if rand.random() < 0.5:
-			return 'n'
+			if rand.random() < 0.5:
+				return 'n'
+			else:
+				return 's'
 		else:
-			return 's'
+			if rand.random() < 0.5:
+				return 'e'
+			else:
+				return 'w'
 
 	def update(self, reward, new_game_text):
-		return
+		pass
 
