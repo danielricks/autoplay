@@ -6,7 +6,8 @@ from multiprocessing import Process, Lock
 
 
 # Describes an agents life span
-def agent_action_loop(output_lock, a, t, t_c):
+def agent_action_loop(output_lock, a, t):
+
 	counter = 0
 
 	# A game is started
