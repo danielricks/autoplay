@@ -30,7 +30,7 @@ def agent_action_loop(output_lock, a, t):
 
 		counter += 1
 
-# Print standard output by using a lock
+# Print standard output using a lock
 def print_output(lock, text):
 	lock.acquire()
 	try:
@@ -47,7 +47,7 @@ current_game_file = 'zork1.z5'
 # Agents are created and assigned a process
 for x in xrange(number_agents):
 	initial_epsilon = 3
-	training_cycles = 10
+	training_cycles = 100
 
 	# An agent is created and a game is initialized
 	a = ad.AgentDumb(initial_epsilon, training_cycles)
