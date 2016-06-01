@@ -14,7 +14,6 @@ $ ./setup.sh
 Move a copy of wikipedia_articles.bin to autoplay/scholar.
 
 Move a copy of english_assertions.csv into autoplay/conceptnetter.
-
 Or perform both the bash and python code below.
 
 ```bash
