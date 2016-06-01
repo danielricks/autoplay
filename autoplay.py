@@ -54,5 +54,5 @@ for x in xrange(number_agents):
 	t = tp.TextPlayer(current_game_file)
 
 	# Each agent gets it's own background process
-	Process(target=agent_action_loop, args=(output_lock, a, t, training_cycles)).start()
+	Process(target=agent_action_loop, args=(output_lock, a, t)).start()
 
