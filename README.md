@@ -5,16 +5,16 @@ Main project files for teaching computers how to play text-based games
 
 ## Setup
 
-1. The following script will install [textplayer](https://github.com/kingjamesiv/textplayer) (Frotz interface), [scholar](https://github.com/kingjamesiv/scholar) (Word2Vec interface), and [conceptnetter](https://github.com/kingjamesiv/conceptnetter) (ConceptNet 5 interface) in the autoplay folder.
+I. The following script will install [textplayer](https://github.com/kingjamesiv/textplayer) (Frotz interface), [scholar](https://github.com/kingjamesiv/scholar) (Word2Vec interface), and [conceptnetter](https://github.com/kingjamesiv/conceptnetter) (ConceptNet 5 interface) in the autoplay folder.
 
 ```bash
 $ chmod 777 setup.sh
 $ ./setup.sh
 ```
 
-2. Move a copy of wikipedia_articles.bin to autoplay/scholar.
+II. Move a copy of wikipedia_articles.bin to autoplay/scholar.
 
-3. Move a copy of english_assertions.csv into autoplay/conceptnetter.
+III. Move a copy of english_assertions.csv into autoplay/conceptnetter.
 Or perform both the bash and python code below.
 
 ```bash
@@ -28,8 +28,7 @@ c = cn.ConceptNetter()
 c.create_english_CSV_file()
 ```
 
-4. Create parsey/ into autoplay/
-After installing Parsey McParseface, move the contents of model/syntaxnet into autoplay/parsey. Then run the following script.
+IV. Create parsey/ in autoplay/. After installing Parsey McParseface, move the contents of model/syntaxnet into autoplay/parsey. Then run the following script.
 
 ```bash
 $ chmod 777 setup_parsey.sh
