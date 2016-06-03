@@ -35,7 +35,7 @@ $ chmod +x install_parsey.sh
 $ ./install_parsey.sh
 ```
 
-IV. Create parsey/ in autoplay/. Move the contents of model/syntaxnet into autoplay/parsey. Then run the following script.
+V. Create parsey/ in autoplay/. Move the contents of model/syntaxnet into autoplay/parsey. Then run the following script.
 
 ```bash
 $ chmod +x setup_parsey.sh
