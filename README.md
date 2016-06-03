@@ -21,7 +21,7 @@ Or perform both the bash and python code below.
 $ wget http://conceptnet5.media.mit.edu/downloads/current/conceptnet5_flat_csv_5.4.tar.bz2
 $ mv data conceptnetter
 ```
-And now run the following commands from the autoplay folder.
+And now run the following commands in Python from the autoplay folder.
 ```python
 import conceptnetter.conceptNetter as cn
 c = cn.ConceptNetter()
