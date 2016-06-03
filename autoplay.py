@@ -1,6 +1,6 @@
 import sys, os, time
 import textplayer.textPlayer as tp
-import agents.agentDumb as ad
+import agents.agentBaseClass as ac
 
 from multiprocessing import Process, Lock
 
@@ -9,6 +9,7 @@ from multiprocessing import Process, Lock
 def agent_action_loop(output_lock, a, t):
 
 	counter = 0
+	last_score = 0
 
 	# A game is started
 	current_game_text = t.run()
@@ -17,7 +18,7 @@ def agent_action_loop(output_lock, a, t):
 	while (counter < training_cycles):
 
 		# Get the current command from the agent, given the current game text
-		current_command = a.take_action(current_game_text)
+		current_command = a.take_action(current_game_text, False)
 
 		# New game text is acquired after executing the command
 		current_game_text = t.execute_command(current_command)
@@ -25,7 +26,10 @@ def agent_action_loop(output_lock, a, t):
 		print_output(output_lock, str(a) + ' ' + current_command + ' ' + current_game_text)
 
 		# The agent is rewarded
-		reward = 1
+		if t.get_score() != None:
+			score, possible_score = t.get_score()
+		reward = score - last_score
+		last_score = score
 		a.update(reward, current_game_text)
 
 		counter += 1
@@ -47,10 +51,11 @@ current_game_file = 'zork1.z5'
 # Agents are created and assigned a process
 for x in xrange(number_agents):
 	initial_epsilon = 3
-	training_cycles = 100
+	training_cycles = 1000
 
 	# An agent is created and a game is initialized
-	a = ad.AgentDumb(initial_epsilon, training_cycles)
+	a = ac.AgentBaseClass(initial_epsilon, training_cycles)
+	a.refresh()
 	t = tp.TextPlayer(current_game_file)
 
 	# Each agent gets it's own background process
