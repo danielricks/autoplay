@@ -35,3 +35,8 @@ cd models/syntaxnet/tensorflow
 ./configure
 cd ..
 bazel test syntaxnet/... util/utf8/...
+
+# Install NLTK and Word2Vec
+pip install nltk
+sudo apt-get -y install cython
+sudo pip install word2vec
