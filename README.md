@@ -28,7 +28,7 @@ c = cn.ConceptNetter()
 c.create_english_CSV_file()
 ```
 
-IV. Create parsey/ in autoplay/. After installing Parsey McParseface, move the contents of model/syntaxnet into autoplay/parsey. Then run the following script.
+IV. Create parsey/ in autoplay/. After installing [Parsey McParseface](https://github.com/tensorflow/models/tree/master/syntaxnet), move the contents of model/syntaxnet into autoplay/parsey. Then run the following script.
 
 ```bash
 $ chmod 555 setup_parsey.sh
