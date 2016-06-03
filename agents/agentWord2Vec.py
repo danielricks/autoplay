@@ -47,7 +47,7 @@ class AgentWord2Vec:
 	def get_status(self):
 		return 'TOTAL POINTS = ' + str(self.total_points_earned)
 
-	# Useful for writing date filies that track obtained reward over time
+	# Useful for writing date files that track obtained reward over time
 	def get_total_points_earned():
 		return self.total_points_earned
 
