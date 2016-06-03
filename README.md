@@ -28,7 +28,7 @@ c = cn.ConceptNetter()
 c.create_english_CSV_file()
 ```
 
-IV. Install [Parsey McParseface](https://github.com/tensorflow/models/tree/master/syntaxnet). If Parsey is already installed, continue to step V. This script should not be run in autoplay/, and is recommended to be run in Downloads/. It requires root access.
+IV. Install [Parsey McParseface](https://github.com/tensorflow/models/tree/master/syntaxnet). If Parsey is already installed, continue to step V. This script should not be run in autoplay/, and is recommended to be run in Downloads/. It requires root access, Ubuntu 14.04, and Python 2.7.
 
 ```bash
 $ chmod +x install_parsey.sh
