@@ -124,6 +124,9 @@ class AgentWord2Vec:
 		single_tagged_nouns = re.findall(r'[A-Za-z]+_NN', tagged_game_text)
 		compound_tagged_nouns = re.findall(r'[A-Za-z]+_[J|N]+ [A-Za-z]+_NN', tagged_game_text)
 		all_tagged_nouns = single_tagged_nouns + compound_tagged_nouns
+		self.write_to_file("Simple list: " + str(single_tagged_nouns) + '\n')
+		self.write_to_file("Compound list: " + str(compound_tagged_nouns) + '\n')
+		self.write_to_file("All: " + str(all_tagged_nouns) + '\n')
 
 		# Take out duplicates (remove 'door_NN' when 'trap_NN door_NN' is avilable)
 		# For every noun phrase...
@@ -134,7 +137,8 @@ class AgentWord2Vec:
 				# If the second word in the noun phrase (guaranteed to be a noun) and the noun are the same...
 				if single_tagged_noun.lower() == second_word_and_tag.lower():
 					# Remove the single noun from the list
-					all_tagged_nouns.remove(single_tagged_noun)
+					if single_tagged_noun in all_tagged_nouns:
+						all_tagged_nouns.remove(single_tagged_noun)
 
 		# If there are nouns in the list...
 		if len(all_tagged_nouns) > 0:
