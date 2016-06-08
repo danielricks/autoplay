@@ -18,10 +18,11 @@ class AgentWord2Vec:
 		self.last_good_game_text = ''
 		# Refreshes the debug log file to be empty at the beginning of a game run
 		open('debugAgentWord2Vec.txt', 'w').close()
+		open('bad_commands.txt', 'w').close()
 		# Used to guarantee that the same command won't be run twice in a row
 		self.last_command = ''
 		# Used for guaranteeing that commands that have failed in the past will not be executed again
-		self.used_commands = []#self.load_bad_commands()
+		self.used_commands = {}
 		# Used to keep track of the commands that can be run in a given area (Resets when a unique output is encountered)
 		self.possible_commands = []
 		# Used for keeping track of unique outputs and removing the possibility of re-running commands that lead to non-unique outputs
@@ -29,6 +30,7 @@ class AgentWord2Vec:
 
 		# PARAMETERS
 		# Used to set the number of characters in the game_text that are unique
+		# So ( I don't know the word "shove".) turns to ( I don't know the wo)
 		self.OUTPUT_CHARACTER_COUNT = 20
 		# Used to set the number of commands that lead to an output before it's not considered 'unique'
 		self.ARBITRARY_COMMAND_CONTROL_COUNT = 30
@@ -61,17 +63,20 @@ class AgentWord2Vec:
 				self.stale_output[game_text_clip].add(self.last_command)
 
 		try:
-			self.write_to_file(str(len(self.stale_output[" I don't know the wo"])) + '\t' + str(self.stale_output) + '\n')
+			self.write_to_file('\t' + str(self.stale_output) + '\n')
 		except:
 			pass
 
 		# If the output is bad... (if the game is just beginning or if the output to command ratio is 1:20 ish)
 		if self.last_good_game_text != '' and len(self.stale_output[game_text_clip]) >= self.ARBITRARY_COMMAND_CONTROL_COUNT:
 
-			with open('bad_commands.txt', 'a') as f:
-#				if self.last_command != '':
-				f.write(self.last_command + '\n')
-			self.used_commands.append(self.last_command)
+			# We used to just append to a list, now we take advantage of Python's dictionary's use of hashing
+			try:
+				self.used_commands[self.last_command] += 1
+			except:
+				self.used_commands[self.last_command] = 0
+				with open('bad_commands.txt', 'a') as f:
+					f.write(self.last_command + '\n')
 
 			# If there are still commands to be run...
 			if len(self.possible_commands) > 0:
@@ -120,13 +125,14 @@ class AgentWord2Vec:
 
 	# Returns the list of commands given a list of identified nouns or noun phrases
 	def get_commands(self, tagged_game_text):
+		self.write_to_file("Tagged_game_text: " + str(tagged_game_text) + '\n')
 		# Should I check for [A-Za-z]+_NNP [A-Za-z]+_NNP ???
 		single_tagged_nouns = re.findall(r'[A-Za-z]+_NN', tagged_game_text)
 		compound_tagged_nouns = re.findall(r'[A-Za-z]+_[J|N]+ [A-Za-z]+_NN', tagged_game_text)
 		all_tagged_nouns = single_tagged_nouns + compound_tagged_nouns
-		self.write_to_file("Simple list: " + str(single_tagged_nouns) + '\n')
-		self.write_to_file("Compound list: " + str(compound_tagged_nouns) + '\n')
-		self.write_to_file("All: " + str(all_tagged_nouns) + '\n')
+#		self.write_to_file("Simple list: " + str(single_tagged_nouns) + '\n')
+#		self.write_to_file("Compound list: " + str(compound_tagged_nouns) + '\n')
+#		self.write_to_file("All: " + str(all_tagged_nouns) + '\n')
 
 		# Take out duplicates (remove 'door_NN' when 'trap_NN door_NN' is avilable)
 		# For every noun phrase...
@@ -200,7 +206,7 @@ class AgentWord2Vec:
 		else:
 			return 'look'
 
-	# Return a list of commands for a given noun
+	# Return a list of commands for a given list of tagged words ('door_NN', 'trap_NN door_NN', 'wooden_JJ door_NN', etc.)
 	def get_commands_for_noun(self, tagged_list):
 		# Get a list of verbs for the noun
 		tagged_noun = tagged_list[-1]
@@ -215,7 +221,10 @@ class AgentWord2Vec:
 				command = verb + ' ' + tagged_list[0].split('_')[0] + ' ' + noun
 			else:
 				command = verb + ' ' + noun
-			if not command in self.used_commands:
+			# Take advantage of Python's hashing to quickly check whether a command is valid
+			try:
+				self.used_commands[command] += 1
+			except:
 				commands.append(command)
 
 		self.write_to_file(str(tagged_list) + '\t' + ",".join(commands) + '\n')
@@ -223,6 +232,7 @@ class AgentWord2Vec:
 		# Return the list of commands (only a specified number are returned)
 		return commands[:self.COMMANDS_RETURNED_COUNT]
 
+	# Returns a list of verbs for a given tagged noun
 	def get_verbs_for_noun(self, tagged_noun):
 		# Begin with a list of standard verbs
 		verbs = copy.deepcopy(self.STANDARD_VERBS)
@@ -245,15 +255,6 @@ class AgentWord2Vec:
 			verb = tagged_verb.split('_')[0]
 			verbs.append(verb)
 		return verbs
-
-	# Loads the list of bad commands into memory
-	def load_bad_commands(self):
-		bad_commands = []
-		if os.path.exists('bad_commands.txt'):
-			with open('bad_commands.txt') as f:
-				for line in f:
-					bad_commands.append(line.replace('\n', ''))
-		return bad_commands
 
 	# If overwritten in a derived class, this function should still be sure to update total_points_earned
 	def update(self, reward, new_game_text):
