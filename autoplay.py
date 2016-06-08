@@ -28,9 +28,9 @@ def agent_action_loop(output_lock, a, t):
 		# The agent is rewarded
 		if t.get_score() != None:
 			score, possible_score = t.get_score()
-		reward = score - last_score
-		last_score = score
-		a.update(reward, current_game_text)
+			reward = score - last_score
+			last_score = score
+			a.update(reward, current_game_text)
 
 		counter += 1
 
