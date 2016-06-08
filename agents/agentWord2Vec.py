@@ -17,8 +17,10 @@ class AgentWord2Vec:
 		# Used for continuing to work within a game_text when the last command(s) didn't give you good output
 		self.last_good_game_text = ''
 		# Refreshes the debug log file to be empty at the beginning of a game run
-		open('debugAgentWord2Vec.txt', 'w').close()
-		open('bad_commands.txt', 'w').close()
+		self.debug = False
+		if self.debug:
+			open('debugAgentWord2Vec.txt', 'w').close()
+			open('bad_commands.txt', 'w').close()
 		# Used to guarantee that the same command won't be run twice in a row
 		self.last_command = ''
 		# Used for guaranteeing that commands that have failed in the past will not be executed again
@@ -75,8 +77,9 @@ class AgentWord2Vec:
 				self.used_commands[self.last_command] += 1
 			except:
 				self.used_commands[self.last_command] = 0
-				with open('bad_commands.txt', 'a') as f:
-					f.write(self.last_command + '\n')
+				if self.debug:
+					with open('bad_commands.txt', 'a') as f:
+						f.write(self.last_command + '\n')
 
 			# If there are still commands to be run...
 			if len(self.possible_commands) > 0:
@@ -179,8 +182,9 @@ class AgentWord2Vec:
 
 	# Writes to the debug file
 	def write_to_file(self, text):
-		with open('debugAgentWord2Vec.txt', 'a') as f:
-			f.write(text)
+		if self.debug:
+			with open('debugAgentWord2Vec.txt', 'a') as f:
+				f.write(text)
 
 	# Return a random movement command (or 'look')
 	def get_random_movement_command(self):
