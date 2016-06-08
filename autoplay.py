@@ -23,7 +23,7 @@ def agent_action_loop(output_lock, a, t):
 		# New game text is acquired after executing the command
 		current_game_text = t.execute_command(current_command)
 
-		print_output(output_lock, str(a) + ' ' + current_command + ' ' + current_game_text)
+		print_output(output_lock, str(counter) + ' ' + str(a) + ' ' + current_command + ' ' + current_game_text)
 
 		# The agent is rewarded
 		if t.get_score() != None:
