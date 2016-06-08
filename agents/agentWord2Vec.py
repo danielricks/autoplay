@@ -3,6 +3,7 @@ import parseyMethods
 import scholar.scholar as sch
 import conceptnetter.conceptNetter as cn
 import os, random, copy, re
+import cPickle as pickle
 
 class AgentWord2Vec:
 
@@ -23,12 +24,16 @@ class AgentWord2Vec:
 			open('bad_commands.txt', 'w').close()
 		# Used to guarantee that the same command won't be run twice in a row
 		self.last_command = ''
-		# Used for guaranteeing that commands that have failed in the past will not be executed again
-		self.used_commands = {}
+		
 		# Used to keep track of the commands that can be run in a given area (Resets when a unique output is encountered)
 		self.possible_commands = []
 		# Used for keeping track of unique outputs and removing the possibility of re-running commands that lead to non-unique outputs
-		self.stale_output = {}
+		# Used for guaranteeing that commands that have failed in the past will not be executed again
+		if os.path.exists('word_stale_dict.w2v') and os.path.exists('word_used_commands.w2v'):
+			self.stale_output, self.used_commands = self.load_memories()
+		else:
+			self.stale_output = {}
+			self.used_commands = {}
 
 		# PARAMETERS
 		# Used to set the number of characters in the game_text that are unique
@@ -259,6 +264,15 @@ class AgentWord2Vec:
 			verb = tagged_verb.split('_')[0]
 			verbs.append(verb)
 		return verbs
+
+	# Save agent progress to a pickle file
+	def write_memories(self):
+		pickle.dump(self.stale_output, open('word_stale_dict.w2v', 'wb'))
+		pickle.dump(self.used_commands, open('word_used_commands.w2v', 'wb'))
+
+	# Load agent progress from a pickle file
+	def load_memories(self):
+		return pickle.load(open('word_stale_dict.w2v', 'rb')), pickle.load(open('word_used_commands.w2v', 'rb'))
 
 	# If overwritten in a derived class, this function should still be sure to update total_points_earned
 	def update(self, reward, new_game_text):
