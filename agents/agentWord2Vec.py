@@ -48,31 +48,18 @@ class AgentWord2Vec:
 		# Also keep in mind that the first x verbs are standard, and are included in this number
 		self.COMMANDS_RETURNED_COUNT = 15
 
+
 	# Prepares the agent for a new round of training (i.e. prepares to restart the game, but does not erase any learned knowledge)
 	def refresh(self):
 		self.total_points_earned = 0
 
+
 	# This is a not-so-stupid, now very complicated agent.
 	def take_action(self, game_text, evaluation_flag = False):
 
-		# The {output:command} is saved in a dictionary, so that we can track how many inputs return which outputs.
-		# If there are tons of commands that return the same output, those particular commands are not worth executing.
-		# We track them here.
-		# Side note: We only track the first 20 chararacters in the output so that we can catch all
-		# the "I don't know the word [word]" phrases as single outputs.
+		# Take note of output given command
 		game_text_clip = game_text[:self.OUTPUT_CHARACTER_COUNT]
-		try:
-			if len(self.stale_output[game_text_clip]) < self.ARBITRARY_COMMAND_CONTROL_COUNT:
-				self.stale_output[game_text_clip].add(self.last_command)
-		except:
-			self.stale_output[game_text_clip] = set()
-			if len(self.stale_output[game_text_clip]) < self.ARBITRARY_COMMAND_CONTROL_COUNT:
-				self.stale_output[game_text_clip].add(self.last_command)
-
-		try:
-			self.write_to_file('\t' + str(self.stale_output) + '\n')
-		except:
-			pass
+		self.track_output(game_text_clip)
 
 		# If the output is bad... (if the game is just beginning or if the output to command ratio is 1:20 ish)
 		if self.last_good_game_text != '' and len(self.stale_output[game_text_clip]) >= self.ARBITRARY_COMMAND_CONTROL_COUNT:
@@ -131,16 +118,14 @@ class AgentWord2Vec:
 		# (the game_text is good but it can't find any valid commands to run)
 		return self.get_random_movement_command()
 
+
 	# Returns the list of commands given a list of identified nouns or noun phrases
 	def get_commands(self, tagged_game_text):
 		self.write_to_file("Tagged_game_text: " + str(tagged_game_text) + '\n')
-		# Should I check for [A-Za-z]+_NNP [A-Za-z]+_NNP ???
+
 		single_tagged_nouns = re.findall(r'[A-Za-z]+_NN', tagged_game_text)
 		compound_tagged_nouns = re.findall(r'[A-Za-z]+_[J|N]+ [A-Za-z]+_NN', tagged_game_text)
 		all_tagged_nouns = single_tagged_nouns + compound_tagged_nouns
-#		self.write_to_file("Simple list: " + str(single_tagged_nouns) + '\n')
-#		self.write_to_file("Compound list: " + str(compound_tagged_nouns) + '\n')
-#		self.write_to_file("All: " + str(all_tagged_nouns) + '\n')
 
 		# Take out duplicates (remove 'door_NN' when 'trap_NN door_NN' is avilable)
 		# For every noun phrase...
@@ -185,11 +170,32 @@ class AgentWord2Vec:
 			return local_commands
 		return []
 
+
+	# Handles whether output should be considered 'bad' or not by keeping track of commands to output
+	def track_output(self, game_text_clip):
+		# The {output:command} is saved in a dictionary, so that we can track how many inputs return which outputs.
+		# If there are tons of commands that return the same output, those particular commands are not worth executing.
+		# We track them here.
+		# Side note: We only track the first 20 chararacters in the output so that we can catch all
+		# the "I don't know the word [word]" phrases as single outputs.
+		try:
+			if len(self.stale_output[game_text_clip]) < self.ARBITRARY_COMMAND_CONTROL_COUNT:
+				self.stale_output[game_text_clip].add(self.last_command)
+		except:
+			self.stale_output[game_text_clip] = set()
+			if len(self.stale_output[game_text_clip]) < self.ARBITRARY_COMMAND_CONTROL_COUNT:
+				self.stale_output[game_text_clip].add(self.last_command)
+
+		# Write the stale output to commands dictionary to the file
+		self.write_to_file('\t' + str(self.stale_output) + '\n')
+
+
 	# Writes to the debug file
 	def write_to_file(self, text):
 		if self.debug:
 			with open('debugAgentWord2Vec.txt', 'a') as f:
 				f.write(text)
+
 
 	# Return a random movement command (or 'look')
 	def get_random_movement_command(self):
@@ -210,10 +216,13 @@ class AgentWord2Vec:
 			return 'se'
 		elif direction < 0.80:
 			return 'sw'
+		elif direction < 0.85:
+			return 'u'
 		elif direction < 0.90:
-			return 'climb'
+			return 'd'
 		else:
 			return 'look'
+
 
 	# Return a list of commands for a given list of tagged words ('door_NN', 'trap_NN door_NN', 'wooden_JJ door_NN', etc.)
 	def get_commands_for_noun(self, tagged_list):
@@ -241,6 +250,7 @@ class AgentWord2Vec:
 		# Return the list of commands (only a specified number are returned)
 		return commands[:self.COMMANDS_RETURNED_COUNT]
 
+
 	# Returns a list of verbs for a given tagged noun
 	def get_verbs_for_noun(self, tagged_noun):
 		# Begin with a list of standard verbs
@@ -265,31 +275,38 @@ class AgentWord2Vec:
 			verbs.append(verb)
 		return verbs
 
+
 	# Save agent progress to a pickle file
 	def write_memories(self):
 		pickle.dump(self.stale_output, open('word_stale_dict.w2v', 'wb'))
 		pickle.dump(self.used_commands, open('word_used_commands.w2v', 'wb'))
 
+
 	# Load agent progress from a pickle file
 	def load_memories(self):
 		return pickle.load(open('word_stale_dict.w2v', 'rb')), pickle.load(open('word_used_commands.w2v', 'rb'))
+
 
 	# If overwritten in a derived class, this function should still be sure to update total_points_earned
 	def update(self, reward, new_game_text):
 		self.total_points_earned += reward
 
+
 	# Generates a 'status update' which will be printed to the screen by autoplay.py
 	def get_status(self):
 		return 'TOTAL POINTS = ' + str(self.total_points_earned)
+
 
 	# Useful for writing date files that track obtained reward over time
 	def get_total_points_earned():
 		return self.total_points_earned
 
+
 	# Returns a string containing data such as learning rate, loss function, and various hyperparameters which can then be written to a data file.
 	# This is very helpful when you want to repeat a learning run, but can't remember which hyperparameters you used the first time.
 	def get_learning_parameters(filename):
 		pass
+
 
 	# Returns a sentence that has been tagged by Parsey McParseface.
 	def get_tagged(self, text):
