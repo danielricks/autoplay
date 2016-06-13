@@ -18,7 +18,7 @@ class AgentWord2Vec:
 		# Used for continuing to work within a game_text when the last command(s) didn't give you good output
 		self.last_good_game_text = ''
 		# Refreshes the debug log file to be empty at the beginning of a game run
-		self.debug = False
+		self.debug = True
 		if self.debug:
 			open('debugAgentWord2Vec.txt', 'w').close()
 			open('bad_commands.txt', 'w').close()
@@ -126,8 +126,8 @@ class AgentWord2Vec:
 	def get_commands(self, tagged_game_text):
 		self.write_to_file("Tagged_game_text: " + str(tagged_game_text) + '\n')
 
-		single_tagged_nouns = re.findall(r'[A-Za-z]+_NN[S]+', tagged_game_text)
-		compound_tagged_nouns = re.findall(r'[A-Za-z]+_[J|N]+ [A-Za-z]+_NN[S]+', tagged_game_text)
+		single_tagged_nouns = re.findall(r'[A-Za-z]+_NN[S]*', tagged_game_text)
+		compound_tagged_nouns = re.findall(r'[A-Za-z]+_[J|N]+ [A-Za-z]+_NN[S]*', tagged_game_text)
 		all_tagged_nouns = single_tagged_nouns + compound_tagged_nouns
 
 		# Take out duplicates (remove 'door_NN' when 'trap_NN door_NN' is avilable)
@@ -223,9 +223,10 @@ class AgentWord2Vec:
 			return 'u'
 		elif direction < 0.90:
 			return 'd'
+		elif direction < 0.95:
+			return 'l'
 		else:
-			return 'look'
-
+			return 'i'
 
 	# Return a list of commands for a given list of tagged words ('door_NN', 'trap_NN door_NN', 'wooden_JJ door_NN', etc.)
 	def get_commands_for_noun(self, tagged_list):
@@ -269,7 +270,10 @@ class AgentWord2Vec:
 			tagged_verbs = self.verb_dict[tagged_noun]
 		else:
 			# Or from Word2Vec directly
-			tagged_verbs = self.s.get_verbs(tagged_noun)
+			if tagged_noun.split('_')[1] == '_NNS':
+				tagged_verbs = self.s.get_verbs_plural(tagged_noun)
+			else:
+				tagged_verbs = self.s.get_verbs(tagged_noun)
 			self.verb_dict[tagged_noun] = tagged_verbs
 
 		# Add every verb (without its tag) to a list and return it
