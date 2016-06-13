@@ -22,6 +22,7 @@ class AgentWord2Vec:
 		if self.debug:
 			open('debugAgentWord2Vec.txt', 'w').close()
 			open('bad_commands.txt', 'w').close()
+		open('good_commands.txt', 'w').close()
 		# Used to guarantee that the same command won't be run twice in a row
 		self.last_command = ''
 		
@@ -85,6 +86,8 @@ class AgentWord2Vec:
 				# Return the command
 				return current_command
 		else:
+			with open('good_commands.txt', 'a') as f:
+				f.write(self.last_command + '\n')
 			# If the output is good and we need commands to run...
 			self.write_to_file(':::Relearning commands:::' + '\n')
 			# Part-of-speech tag the game_text
@@ -123,8 +126,8 @@ class AgentWord2Vec:
 	def get_commands(self, tagged_game_text):
 		self.write_to_file("Tagged_game_text: " + str(tagged_game_text) + '\n')
 
-		single_tagged_nouns = re.findall(r'[A-Za-z]+_NN', tagged_game_text)
-		compound_tagged_nouns = re.findall(r'[A-Za-z]+_[J|N]+ [A-Za-z]+_NN', tagged_game_text)
+		single_tagged_nouns = re.findall(r'[A-Za-z]+_NN[S]+', tagged_game_text)
+		compound_tagged_nouns = re.findall(r'[A-Za-z]+_[J|N]+ [A-Za-z]+_NN[S]+', tagged_game_text)
 		all_tagged_nouns = single_tagged_nouns + compound_tagged_nouns
 
 		# Take out duplicates (remove 'door_NN' when 'trap_NN door_NN' is avilable)
