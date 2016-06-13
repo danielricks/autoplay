@@ -14,7 +14,8 @@ git clone https://github.com/kingjamesiv/scholar.git
 # Install Conceptnetter
 git clone https://github.com/kingjamesiv/conceptnetter.git
 
-# Install NLTK and Word2Vec
-pip install nltk
+# Install NLTK and Word2Vec (Requires pip)
+sudo apt-get -y install pip
+sudo pip install nltk
 sudo apt-get -y install cython
 sudo pip install word2vec
