@@ -18,11 +18,11 @@ class AgentWord2Vec:
 		# Used for continuing to work within a game_text when the last command(s) didn't give you good output
 		self.last_good_game_text = ''
 		# Refreshes the debug log file to be empty at the beginning of a game run
-		self.debug = False
+		self.debug = True
 		if self.debug:
 			open('debugAgentWord2Vec.txt', 'w').close()
 			open('bad_commands.txt', 'w').close()
-		open('good_commands.txt', 'w').close()
+#		open('good_commands.txt', 'w').close()
 		# Used to guarantee that the same command won't be run twice in a row
 		self.last_command = ''
 		
@@ -43,10 +43,10 @@ class AgentWord2Vec:
 		# Used to set the number of commands that lead to an output before it's not considered 'unique'
 		self.ARBITRARY_COMMAND_CONTROL_COUNT = 30
 		# Used as verbs for every noun in command generation
-		self.STANDARD_VERBS = ['open', 'take'] # 'move', 'use', 'open', 'enter'
+		self.STANDARD_VERBS = ['open', 'take']
 		# Used to set the number of commands returned when Word2Vec is queried.
 		# (Make sure that this number is smaller than self.ARBITRARY_COMMAND_CONTROL_COUNT)
-		# Also keep in mind that the first x verbs are standard, and are included in this number
+		# Also keep in mind that the first x verbs are the standard verbs, and are included in this number
 		self.COMMANDS_RETURNED_COUNT = 15
 
 
@@ -128,19 +128,23 @@ class AgentWord2Vec:
 
 		single_tagged_nouns = re.findall(r'[A-Za-z]+_NN[S]*', tagged_game_text)
 		compound_tagged_nouns = re.findall(r'[A-Za-z]+_[J|N]+ [A-Za-z]+_NN[S]*', tagged_game_text)
+#		single_tagged_nouns_proper = re.findall(r'[A-Za-z]+_NNP', tagged_game_text)
+#		compound_tagged_nouns_proper = re.findall(r'[A-Za-z]+_NNP [A-Za-z]+_NNP', tagged_game_text)
 		all_tagged_nouns = single_tagged_nouns + compound_tagged_nouns
 
 		# Take out duplicates (remove 'door_NN' when 'trap_NN door_NN' is avilable)
-		# For every noun phrase...
-		for compound_tagged_noun in compound_tagged_nouns:
-			second_word_and_tag = compound_tagged_noun.split()[1]
-			# For every noun...
-			for single_tagged_noun in single_tagged_nouns:
-				# If the second word in the noun phrase (guaranteed to be a noun) and the noun are the same...
-				if single_tagged_noun.lower() == second_word_and_tag.lower():
-					# Remove the single noun from the list
-					if single_tagged_noun in all_tagged_nouns:
-						all_tagged_nouns.remove(single_tagged_noun)
+		# This is no longer necessary ('take large egg' doesn't work, while 'take egg' does)
+		if False:
+			# For every noun phrase...
+			for compound_tagged_noun in compound_tagged_nouns:
+				second_word_and_tag = compound_tagged_noun.split()[1]
+				# For every noun...
+				for single_tagged_noun in single_tagged_nouns:
+					# If the second word in the noun phrase (guaranteed to be a noun) and the noun are the same...
+					if single_tagged_noun.lower() == second_word_and_tag.lower():
+						# Remove the single noun from the list
+						if single_tagged_noun in all_tagged_nouns:
+							all_tagged_nouns.remove(single_tagged_noun)
 
 		# If there are nouns in the list...
 		if len(all_tagged_nouns) > 0:
@@ -224,9 +228,9 @@ class AgentWord2Vec:
 		elif direction < 0.90:
 			return 'd'
 		elif direction < 0.95:
-			return 'l'
+			return 'look'
 		else:
-			return 'i'
+			return 'inv'
 
 	# Return a list of commands for a given list of tagged words ('door_NN', 'trap_NN door_NN', 'wooden_JJ door_NN', etc.)
 	def get_commands_for_noun(self, tagged_list):
@@ -272,8 +276,8 @@ class AgentWord2Vec:
 			# Or from Word2Vec directly
 			if tagged_noun.split('_')[1] == '_NNS':
 				tagged_verbs = self.s.get_verbs_plural(tagged_noun)
-				with open('good_commands.txt', 'a') as f:
-					f.write(self.last_command + '\t' + str(tagged_verbs) + '\n')
+#				with open('good_commands.txt', 'a') as f:
+#					f.write(self.last_command + '\t' + str(tagged_verbs) + '\n')
 			else:
 				tagged_verbs = self.s.get_verbs(tagged_noun)
 			self.verb_dict[tagged_noun] = tagged_verbs
