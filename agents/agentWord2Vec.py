@@ -18,7 +18,7 @@ class AgentWord2Vec:
 		# Used for continuing to work within a game_text when the last command(s) didn't give you good output
 		self.last_good_game_text = ''
 		# Refreshes the debug log file to be empty at the beginning of a game run
-		self.debug = True
+		self.debug = False
 		if self.debug:
 			open('debugAgentWord2Vec.txt', 'w').close()
 			open('bad_commands.txt', 'w').close()
@@ -43,7 +43,7 @@ class AgentWord2Vec:
 		# Used to set the number of commands that lead to an output before it's not considered 'unique'
 		self.ARBITRARY_COMMAND_CONTROL_COUNT = 30
 		# Used as verbs for every noun in command generation
-		self.STANDARD_VERBS = ['move', 'take', 'enter', 'use', 'open']
+		self.STANDARD_VERBS = ['open', 'take'] # 'move', 'use', 'open', 'enter'
 		# Used to set the number of commands returned when Word2Vec is queried.
 		# (Make sure that this number is smaller than self.ARBITRARY_COMMAND_CONTROL_COUNT)
 		# Also keep in mind that the first x verbs are standard, and are included in this number
@@ -86,8 +86,8 @@ class AgentWord2Vec:
 				# Return the command
 				return current_command
 		else:
-			with open('good_commands.txt', 'a') as f:
-				f.write(self.last_command + '\n')
+#			with open('good_commands.txt', 'a') as f:
+#				f.write(self.last_command + '\n')
 			# If the output is good and we need commands to run...
 			self.write_to_file(':::Relearning commands:::' + '\n')
 			# Part-of-speech tag the game_text
@@ -152,7 +152,7 @@ class AgentWord2Vec:
 					first_word_and_tag = tagged_noun.split()[0].split('_')
 					second_word_and_tag = tagged_noun.split()[1].split('_')
 					# If the tag of the second word in the noun phrase is actually 'NN' (and not 'NNS', 'NNP')
-					if second_word_and_tag[1] == 'NN':
+					if second_word_and_tag[1] == 'NN' or second_word_and_tag[1] == 'NNS':
 						# Ensure that every word is lowercase
 						lower_tagged_noun_list = [first_word_and_tag[0].lower() + '_' + first_word_and_tag[1], second_word_and_tag[0].lower() + '_' + second_word_and_tag[1]]
 						# Get commands for the phrase
@@ -272,6 +272,8 @@ class AgentWord2Vec:
 			# Or from Word2Vec directly
 			if tagged_noun.split('_')[1] == '_NNS':
 				tagged_verbs = self.s.get_verbs_plural(tagged_noun)
+				with open('good_commands.txt', 'a') as f:
+					f.write(self.last_command + '\t' + str(tagged_verbs) + '\n')
 			else:
 				tagged_verbs = self.s.get_verbs(tagged_noun)
 			self.verb_dict[tagged_noun] = tagged_verbs
