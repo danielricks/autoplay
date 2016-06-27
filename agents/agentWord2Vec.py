@@ -146,6 +146,19 @@ class AgentWord2Vec:
 						if single_tagged_noun in all_tagged_nouns:
 							all_tagged_nouns.remove(single_tagged_noun)
 
+		score = []
+		score_to_
+		tagged_words_in_game_text = tagged_game_text.split()
+		for word_index in xrange(len(tagged_words_in_game_text)):
+			current_tagged_word = tagged_words_in_game_text[word_index]
+			other_tagged_words = []
+			for inner_word_index in xrange(len(tagged_words_in_game_text)):
+				if inner_word_index != word_index:
+					other_tagged_words.append(tagged_words_in_game_text[inner_word_index])
+			current_score = #word2vec call using current_tagged_word and other_tagged_words
+			
+			score.append(current_score)
+
 		# If there are nouns in the list...
 		if len(all_tagged_nouns) > 0:
 			local_commands = set()
