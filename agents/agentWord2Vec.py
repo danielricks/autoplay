@@ -155,7 +155,7 @@ class AgentWord2Vec:
 			for inner_word_index in xrange(len(tagged_words_in_game_text)):
 				if inner_word_index != word_index:
 					other_tagged_words.append(tagged_words_in_game_text[inner_word_index])
-			current_score = #word2vec call using current_tagged_word and other_tagged_words
+			current_score = 0#word2vec call using current_tagged_word and other_tagged_words
 			
 			score.append(current_score)
 
@@ -243,7 +243,7 @@ class AgentWord2Vec:
 		elif direction < 0.95:
 			return 'look'
 		else:
-			return 'inv'
+			return 'i'
 
 	# Return a list of commands for a given list of tagged words ('door_NN', 'trap_NN door_NN', 'wooden_JJ door_NN', etc.)
 	def get_commands_for_noun(self, tagged_list):
