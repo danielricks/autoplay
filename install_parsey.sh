@@ -7,7 +7,7 @@ sudo apt-get -y install oracle-java8-installer
 sudo apt-get -y install pkg-config zip g++ zlib1g-dev unzip
 
 # Download and install Bazel
-wget bazel-0.2.2b-installer-linux-x86_64.sh
+wget https://github.com/bazelbuild/bazel/releases/download/0.2.2b/bazel-0.2.2b-installer-linux-x86_64.sh
 chmod +x bazel-0.2.2b-installer-linux-x86_64.sh
 ./bazel-0.2.2b-installer-linux-x86_64.sh --user
 
@@ -18,7 +18,7 @@ export PATH="$PATH:$HOME/bin"
 sudo apt-get -y install swig
 
 # Install protobuf (Requires Pip)
-sudo apt-get -y install pip
+sudo apt-get -y install python-pip
 sudo pip install -U protobuf==3.0.0b2
 
 # Install asciitree
