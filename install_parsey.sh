@@ -1,3 +1,5 @@
+# Run the following bash commands. Instead of "sudo pip install asciitree", you may need to run "sudo -H pip install asciitree" instead
+
 # Install JDK8
 sudo add-apt-repository ppa:webupd8team/java
 sudo apt-get -y update
@@ -35,3 +37,7 @@ cd models/syntaxnet/tensorflow
 ./configure
 cd ..
 bazel test syntaxnet/... util/utf8/...
+
+# Create a folder in autoplay/ called parsey/
+# Now copy the contents of models/syntaxnet/ into autoplay/parsey/
+# Run setup_parsey.sh
