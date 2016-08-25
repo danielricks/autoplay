@@ -1,6 +1,6 @@
 import sys, os, time
 import textplayer.textPlayer as tp
-import agents.agentQuantizeActionSpace as ac
+import agents.agentWord2Vec as ac
 
 from multiprocessing import Process, Lock
 
@@ -56,7 +56,7 @@ for x in xrange(number_agents):
 	training_cycles = 10000
 
 	# An agent is created and a game is initialized
-	a = ac.AgentQuantizeActionSpace(initial_epsilon, training_cycles)
+	a = ac.AgentWord2Vec(initial_epsilon, training_cycles)
 	a.refresh()
 	t = tp.TextPlayer(current_game_file)
 

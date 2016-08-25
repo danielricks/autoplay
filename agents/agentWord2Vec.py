@@ -147,7 +147,7 @@ class AgentWord2Vec:
 							all_tagged_nouns.remove(single_tagged_noun)
 
 		score = []
-		score_to_
+#		score_to_
 		tagged_words_in_game_text = tagged_game_text.split()
 		for word_index in xrange(len(tagged_words_in_game_text)):
 			current_tagged_word = tagged_words_in_game_text[word_index]
@@ -288,11 +288,12 @@ class AgentWord2Vec:
 		else:
 			# Or from Word2Vec directly
 			if tagged_noun.split('_')[1] == '_NNS':
-				tagged_verbs = self.s.get_verbs_plural(tagged_noun)
+				tagged_verbs = self.s.get_verbs_plural(noun, 20)
 #				with open('good_commands.txt', 'a') as f:
 #					f.write(self.last_command + '\t' + str(tagged_verbs) + '\n')
 			else:
-				tagged_verbs = self.s.get_verbs(tagged_noun)
+				tagged_verbs = self.s.get_verbs(noun, 20)
+			self.write_to_file(str(tagged_verbs) + '\n')
 			self.verb_dict[tagged_noun] = tagged_verbs
 
 		# Add every verb (without its tag) to a list and return it
