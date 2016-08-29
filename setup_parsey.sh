@@ -5,8 +5,8 @@ contextFile="parsey/syntaxnet/models/parsey_mcparseface/context.pbtxt"
 
 if [ -f "$demoFile" ]
 then
-	sed -i -e 's/=bazel-bin/=parsey\/bazel-bin/g' $smdemoFile
-	sed -i -e 's/=syntaxnet/=parsey\/syntaxnet/g' $smdemoFile
+	sed -i -e 's/bazel-bin/parsey\/bazel-bin/g' $demoFile
+	sed -i -e 's/=syntaxnet/=parsey\/syntaxnet/g' $demoFile
 	echo "$demoFile has been modified."
 	cp $demoFile $smdemoFile
 	sed -i '40,56 d' $smdemoFile
