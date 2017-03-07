@@ -1,9 +1,7 @@
 
-# autoplay: An interactive fiction learning environment
+# autoplay: A learning environment for interactive fiction
 
-Main project files for teaching computers how to play text-based games
-
-Autoplay is a learning environment for creating agents that learn to play interactive fiction. Supported games include Zork I-III and other z-machine interpretable files (.z5). These games are provided as part of this repository.
+Autoplay is a learning environment for creating agents that play text-based games. Supported games include Zork I-III and other z-machine interpretable files (.z5). These games are provided as part of this repository.
 
 This repository uses a modified fork of [Frotz](https://github.com/DavidGriffith/frotz), a z-machine interpreter, written by David Griffith. A python interface, [textplayer](https://github.com/kingjamesiv/textplayer), for Frotz is included as well, which allows games to run in parallel.
 
