@@ -1,5 +1,5 @@
 
-# autoplay: A learning environment for interactive fiction
+# autoplay: a learning environment for interactive fiction
 
 Autoplay is a learning environment for creating agents that play text-based games. Supported games include Zork I-III and other z-machine interpretable files (.z5). These games are provided as part of this repository.
 
