@@ -1,19 +1,28 @@
 
-# autoplay
-## An interactive fiction learning environment
+# autoplay: An interactive fiction learning environment
 
 Main project files for teaching computers how to play text-based games
 
+Autoplay is a learning environment for creating agents that learn to play interactive fiction. Supported games include Zork I-III and other z-machine interpretable files (.z5). These games are provided as part of this repository.
+
+This repository uses a modified fork of [Frotz](https://github.com/DavidGriffith/frotz), a z-machine interpreter, written by David Griffith. A python interface, [textplayer](https://github.com/kingjamesiv/textplayer), for Frotz is included as well, which allows games to run in parallel.
+
+By default, several independent repositories are pulled during setup to create this environment. Generally an agent will require the ability to part-of-speech tag text, so the Natural Language Toolkit [(NLTK)](http://www.nltk.org/) is installed. We found Word2vec to be a valuable tool, so an interface for that [(scholar)](https://github.com/kingjamesiv/scholar) is installed as well.
+
 ## Setup
 
-I. The following script will install [textplayer](https://github.com/kingjamesiv/textplayer) (Frotz interface), [scholar](https://github.com/kingjamesiv/scholar) (Word2Vec interface), and [penseur](https://github.com/kingjamesiv/penseur) (skip-thoughts interface) in the autoplay folder.
+I. The following script will install Frotz, textplayer (Frotz interface), NLTK, Word2vec, and scholar (Word2Vec interface) in the autoplay folder.
 
 ```bash
 $ chmod +x setup.sh
 $ ./setup.sh
 ```
 
-II. Move a copy of wikipedia_articles.bin to autoplay/scholar.
+II. Move a copy of wikipedia_articles.bin and the text file to autoplay/scholar.
+
+## Agents
+
+A number of agents are included, but you are encouraged to create your own.
 
 ## Usage
 
