@@ -7,7 +7,7 @@ This repository uses a modified fork of [Frotz](https://github.com/DavidGriffith
 
 By default, several independent repositories are cloned during setup to create this environment. Generally an agent will require the ability to part-of-speech tag text, so the Natural Language Toolkit [(NLTK)](http://www.nltk.org/) is installed. We found [Word2vec](https://code.google.com/archive/p/word2vec/) to be a valuable tool, so an [interface](https://github.com/kingjamesiv/scholar) for that is installed as well.
 
-A note: our interface for Word2vec uses a part-of-speech tagged corpus, so it cannot be swapped out. The corpus used is a copy of Wikipedia from January 2016, available [here](https://dumps.wikimedia.org/).
+A note: our interface for Word2vec uses a part-of-speech tagged corpus, so it cannot be swapped out. The corpus used is a copy of Wikipedia from January 2016.
 
 ## Setup
 
