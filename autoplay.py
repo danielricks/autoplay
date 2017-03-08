@@ -1,9 +1,8 @@
 import sys, os, time
 import textplayer.textPlayer as tp
-import agents.agentWord2Vec as ac
+import agents.agentBaseClass as ac
 
 from multiprocessing import Process, Lock
-
 
 # Describes an agents life span
 def agent_action_loop(output_lock, a, t):
@@ -34,8 +33,6 @@ def agent_action_loop(output_lock, a, t):
 
 		counter += 1
 
-	a.write_memories()
-
 # Print standard output using a lock
 def print_output(lock, text):
 	lock.acquire()
@@ -47,16 +44,16 @@ def print_output(lock, text):
 # A lock is created for managing output
 output_lock = Lock()
 
-number_agents = 1
+number_agents = 4
 current_game_file = 'zork1.z5'
 
 # Agents are created and assigned a process
 for x in xrange(number_agents):
 	initial_epsilon = 3
-	training_cycles = 10000
+	training_cycles = 1000
 
 	# An agent is created and a game is initialized
-	a = ac.AgentWord2Vec(initial_epsilon, training_cycles)
+	a = ac.AgentBaseClass(initial_epsilon, training_cycles)
 	a.refresh()
 	t = tp.TextPlayer(current_game_file)
 

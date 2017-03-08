@@ -1,9 +1,8 @@
 import random as rand
-import parseyMethods
 import scholar.scholar as sch
-import conceptnetter.conceptNetter as cn
 import os, random, copy, re
 import cPickle as pickle
+import nltk
 
 class AgentWord2Vec:
 
@@ -28,11 +27,12 @@ class AgentWord2Vec:
 		
 		# Used to keep track of the commands that can be run in a given area (Resets when a unique output is encountered)
 		self.possible_commands = []
-		# Used for keeping track of unique outputs and removing the possibility of re-running commands that lead to non-unique outputs
+		
 		# Used for guaranteeing that commands that have failed in the past will not be executed again
 		if os.path.exists('word_stale_dict.w2v') and os.path.exists('word_used_commands.w2v'):
 			self.stale_output, self.used_commands = self.load_memories()
 		else:
+			# Used for keeping track of unique outputs and removing the possibility of re-running commands that lead to non-unique outputs
 			self.stale_output = {}
 			self.used_commands = {}
 
@@ -91,7 +91,7 @@ class AgentWord2Vec:
 			# If the output is good and we need commands to run...
 			self.write_to_file(':::Relearning commands:::' + '\n')
 			# Part-of-speech tag the game_text
-			tagged_game_text = self.get_tagged(game_text)
+			tagged_game_text = self.get_tagged_text(game_text)
 
 			# Get commands from the tagged_game_text (nouns and noun phrases)
 			local_commands = self.get_commands(tagged_game_text)
@@ -128,8 +128,6 @@ class AgentWord2Vec:
 
 		single_tagged_nouns = re.findall(r'[A-Za-z]+_NN[S]*', tagged_game_text)
 		compound_tagged_nouns = re.findall(r'[A-Za-z]+_[J|N]+ [A-Za-z]+_NN[S]*', tagged_game_text)
-#		single_tagged_nouns_proper = re.findall(r'[A-Za-z]+_NNP', tagged_game_text)
-#		compound_tagged_nouns_proper = re.findall(r'[A-Za-z]+_NNP [A-Za-z]+_NNP', tagged_game_text)
 		all_tagged_nouns = single_tagged_nouns + compound_tagged_nouns
 
 		# Take out duplicates (remove 'door_NN' when 'trap_NN door_NN' is avilable)
@@ -147,7 +145,6 @@ class AgentWord2Vec:
 							all_tagged_nouns.remove(single_tagged_noun)
 
 		score = []
-#		score_to_
 		tagged_words_in_game_text = tagged_game_text.split()
 		for word_index in xrange(len(tagged_words_in_game_text)):
 			current_tagged_word = tagged_words_in_game_text[word_index]
@@ -155,7 +152,7 @@ class AgentWord2Vec:
 			for inner_word_index in xrange(len(tagged_words_in_game_text)):
 				if inner_word_index != word_index:
 					other_tagged_words.append(tagged_words_in_game_text[inner_word_index])
-			current_score = 0#word2vec call using current_tagged_word and other_tagged_words
+			current_score = 0
 			
 			score.append(current_score)
 
@@ -336,14 +333,11 @@ class AgentWord2Vec:
 
 
 	# Returns a sentence that has been tagged by Parsey McParseface.
-	def get_tagged(self, text):
-		text = text.replace('!', '.').replace('?', '.').replace('\'', '')
-		if '.' in text:
-			sentences = text.split('.')
-		else:
-			sentences = text
-		tagged_sentences = ''
-		for sentence in sentences:
-			tagged_sentences += parseyMethods.pos_sentence(sentence) + ' '
-		return tagged_sentences
+	def get_tagged_text(self, text):
+		tokenized_text = nltk.word_tokenize(text)
+		pos_tagged_text = nltk.pos_tag(text)
+		formatted_tagged_text = []
+		for tuple_word in pos_tagged_text:
+			formatted_tagged_text.append(tuple_word[0] + '_' + tuple_word[1])
+		return formatted_tagged_text
 

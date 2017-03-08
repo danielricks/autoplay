@@ -1,4 +1,5 @@
 import random as rand
+import scholar.scholar as sch
 
 class AgentBaseClass:
 
