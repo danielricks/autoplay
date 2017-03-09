@@ -34,7 +34,7 @@ $ python autoplay.py zork1.z5 5
 
 Running the code without at least two additional parameters will result in the available games being displayed.
 
-```python
+```bash
 $ python autoplay.py zork1.z5
 Needs more parameters. Try 'python autoplay.py zork1.z5 5'.
 Current games include:  Advent.z5 Adventureland.z5 Balances.z5 BrandX.z5 ...
