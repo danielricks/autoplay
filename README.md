@@ -24,7 +24,9 @@ II. Move a copy of wikipedia_articles.bin and the text file to autoplay/scholar.
 
 A number of agents are included with this code. The agents included are: a basic navigational agent, a more sophisticated noun-verb processing agent, a Q-learning agent with affordance capabilities.
 
-## Usage - Automated
+## Usage
+
+### Automated
 
 Running the main file will run a number of agents on separate processes. The example below will run 5 agents on Zork I.
 
@@ -40,7 +42,7 @@ Needs more parameters. Try 'python autoplay.py zork1.z5 5'.
 Current games include:  Advent.z5 Adventureland.z5 Balances.z5 BrandX.z5 ...
 ```
 
-## Usage - Human
+### Human
 
 There are several ways to play the games, either to get more intuition about the formatting of the text, or for fun.
 
