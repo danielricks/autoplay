@@ -26,7 +26,7 @@ A number of agents are included, but you are encouraged to create your own.
 
 ## Usage
 
-Running the following code will run a number of agents on separate processes. The example below will run 5 agents on Zork I.
+Running the main file will run a number of agents on separate processes. The example below will run 5 agents on Zork I.
 
 ```python
 python autoplay.py zork1.z5 5
