@@ -14,8 +14,8 @@ A note: our interface for Word2vec uses a part-of-speech tagged corpus, so it ca
 I. The following script will install Frotz, textplayer (Frotz interface), NLTK, Word2vec, and scholar (Word2Vec interface) in the autoplay folder.
 
 ```bash
-chmod +x setup.sh
-./setup.sh
+$ chmod +x setup.sh
+$ ./setup.sh
 ```
 
 II. Move a copy of wikipedia_articles.bin and the text file to autoplay/scholar.
@@ -29,13 +29,13 @@ A number of agents are included with this code. The agents included are: a basic
 Running the main file will run a number of agents on separate processes. The example below will run 5 agents on Zork I.
 
 ```bash
-python autoplay.py zork1.z5 5
+$ python autoplay.py zork1.z5 5
 ```
 
 Running the code without at least two additional parameters will result in the available games being displayed.
 
 ```python
-python autoplay.py zork1.z5
+$ python autoplay.py zork1.z5
 Needs more parameters. Try 'python autoplay.py zork1.z5 5'.
 Current games include:  Advent.z5 Adventureland.z5 Balances.z5 BrandX.z5 ...
 ```
@@ -44,10 +44,10 @@ There are several ways to play the games, either to get more intuition about the
 
 From the autoplay folder (text reformatted  for agents):
 ```bash
-python play.py zork1.z5
+$ python play.py zork1.z5
 ```
 
 From the textplayer folder (direct interface with Frotz):
 ```bash
-frotz/dfrotz games/zork1.z5
+$ frotz/dfrotz games/zork1.z5
 ```
