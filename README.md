@@ -26,8 +26,16 @@ A number of agents are included, but you are encouraged to create your own.
 
 ## Usage
 
-Running the following code will run a number of agents on separate processes.
+Running the following code will run a number of agents on separate processes. The example below will run 5 agents on Zork I.
+
+```python
+python autoplay.py zork1.z5 5
+```
+
+Running the code without at least two additional parameters will result in the available games being displayed.
 
 ```python
 python autoplay.py
+Needs more parameters. Try 'python autoplay.py zork1.z5 5'.
+Current games include:  Advent.z5 Adventureland.z5 Balances.z5 BrandX.z5 Murdac.z5 Parc.z5 acorncourt.z5 amish.z5 awaken.z5 break-in.z5 building.z5 bunny.z5 candy.z5 causality.z5 cavetrip.z5 cheater.z5 cia.z5 curses.z5 death.z5 deephome.z5 detective.z5 enter.z5 fable.z5 frozen.z5 gold.z5 inhumane.z5 jewel.z5 karn.z5 library.z5 lily.z5 loose.z5 mansion.z5 minster.z5 night.z5 omniquest.z5 parallel.z5 pentari.z5 piracy_2.z5 reverb.z5 sherbet.z5 spirit.z5 spot.z5 temple.z5 theatre.z5 tryst205.z5 zenon.z5 zork1.z5 zork2.z5 zork3.z5 ztuu.z5
 ```
