@@ -41,11 +41,21 @@ def print_output(lock, text):
 	finally:
 		lock.release()
 
+if len(sys.argv) < 3:
+	print 'Needs more parameters. Try \'python autoplay.py zork1.z5 5\'.'
+	print 'Available games include: ',
+	game_directory = os.listdir('textplayer/games')
+	for game in sorted(game_directory):
+		print game,
+	sys.exit()
+else:
+	print 'Running ' + sys.argv[2] + ' agents on the game ' + sys.argv[1]
+
 # A lock is created for managing output
 output_lock = Lock()
 
-number_agents = 4
-current_game_file = 'zork1.z5'
+number_agents = int(sys.argv[2])
+current_game_file = sys.argv[1]
 
 # Agents are created and assigned a process
 for x in xrange(number_agents):
