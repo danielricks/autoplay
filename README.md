@@ -18,7 +18,7 @@ $ chmod +x setup.sh
 $ ./setup.sh
 ```
 
-II. Move a copy of wikipedia_articles.bin and the text file to autoplay/scholar.
+II. Download a copy of the [scholar dependencies](https://drive.google.com/open?id=0B3lpCS07rg43bVBmd1lSVUVSb28), extract, and move the files to autoplay/scholar. See the [scholar Github page](https://github.com/danielricks/scholar) for more information on use.
 
 ## Agents
 
