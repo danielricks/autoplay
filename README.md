@@ -3,7 +3,7 @@
 
 Autoplay is a learning environment for creating agents that play text-based games. Supported games include the popular Zork series and other z-machine interpretable files (specifically the .z5 format). These games are provided as part of this repository.
 
-This repository uses a modified fork of [Frotz](https://github.com/DavidGriffith/frotz), a z-machine interpreter written by David Griffith. A [python interface](https://github.com/danielricks/textplayer) for Frotz is included as well, which allows games to be run in parallel and controlled using python.
+This repository uses a modified fork of [Frotz](https://github.com/DavidGriffith/frotz), a z-machine interpreter maintained by David Griffith. A [python interface](https://github.com/danielricks/textplayer) for Frotz is included as well, which allows games to be run in parallel and controlled using python.
 
 By default, several independent repositories are cloned during setup to create this environment. Generally an agent will require the ability to part-of-speech tag text, so the Natural Language Toolkit [(NLTK)](http://www.nltk.org/) is installed. We found [Word2vec](https://code.google.com/archive/p/word2vec/) to be a valuable tool, so an [interface](https://github.com/danielricks/scholar) for that is installed as well.
 
