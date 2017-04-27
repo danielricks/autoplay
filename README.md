@@ -5,13 +5,13 @@ Autoplay is a learning environment for creating agents that play text-based game
 
 This repository uses a modified fork of [Frotz](https://github.com/DavidGriffith/frotz), a z-machine interpreter maintained by David Griffith. A [python interface](https://github.com/danielricks/textplayer) for Frotz is included as well, which allows games to be run in parallel and controlled using python.
 
-By default, several independent repositories are cloned during setup to create this environment. Generally an agent will require the ability to part-of-speech tag text, so the Natural Language Toolkit [(NLTK)](http://www.nltk.org/) is installed. We found [Word2vec](https://code.google.com/archive/p/word2vec/) to be a valuable tool, so an [interface](https://github.com/danielricks/scholar) for that is installed as well.
+By default, several independent repositories are cloned during setup to create this environment. Generally an agent will require the ability to part-of-speech tag text, so the Natural Language Toolkit [(NLTK)](http://www.nltk.org/) is installed. We found [word2vec](https://code.google.com/archive/p/word2vec/) to be a valuable tool, so an [interface](https://github.com/danielricks/scholar) for that is installed as well.
 
-A note: our interface for Word2vec uses a part-of-speech tagged corpus, so it cannot be swapped out with a normal word2vec .bin file. The corpus used is a copy of Wikipedia from January 2016.
+A note: our interface for word2vec uses a part-of-speech tagged corpus, so it cannot be swapped out with a normal word2vec .bin file. The corpus used is a copy of Wikipedia from January 2016.
 
 ## Setup
 
-I. The following script will install Frotz, textplayer (Frotz interface), NLTK, Word2vec, and scholar (Word2Vec interface) in the autoplay folder.
+I. The following script will install Frotz, textplayer (Frotz interface), NLTK, word2vec, and scholar (word2Vec interface) in the autoplay folder.
 
 ```bash
 $ chmod +x setup.sh
@@ -23,6 +23,8 @@ II. Download a copy of the [scholar dependencies](https://drive.google.com/open?
 ## Agents
 
 A number of agents are included with this code. The agents included are: a basic navigational agent, a more sophisticated noun-verb processing agent, a Q-learning agent with affordance capabilities.
+
+We won the IEEE CIG 2016 Text-based Adventure Competition! Our autoplay-compatible agent is provided [here](https://github.com/danielricks/IEEE-CIG-2016-Text-based-Adventure-AI-Competition-Winning-Agent).
 
 ## Usage
 
@@ -44,7 +46,7 @@ Current games include:  Advent.z5 Adventureland.z5 Balances.z5 BrandX.z5 ...
 
 ### Human
 
-There are several ways to play the games, either to get more intuition about the formatting of the text, or for fun.
+There are two ways to play the games, either to get more intuition about the formatting of the text, or for fun.
 
 From the autoplay folder (text reformatted for agents):
 ```bash
