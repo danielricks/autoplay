@@ -22,9 +22,9 @@ II. Download a copy of the [scholar dependencies](https://drive.google.com/open?
 
 ## Agents
 
-A number of agents are included with this code. The agents included are: a basic navigational agent, a more sophisticated noun-verb processing agent, a Q-learning agent with affordance capabilities.
+A number of agents are included with this code. The agents included are: a basic navigational agent and a more sophisticated noun-verb processing agent.
 
-We won the IEEE CIG 2016 Text-based Adventure Competition! Our autoplay-compatible agent is provided [here](https://github.com/danielricks/IEEE-CIG-2016-Text-based-Adventure-AI-Competition-Winning-Agent).
+We won the IEEE CIG 2016 Text-based Adventure Competition! Our autoplay-compatible agent is provided [here](https://github.com/danielricks/BYU-Agent-2016).
 
 ## Usage
 
