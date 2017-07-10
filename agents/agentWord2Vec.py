@@ -332,7 +332,7 @@ class AgentWord2Vec:
 		pass
 
 
-	# Returns a sentence that has been tagged by Parsey McParseface.
+	# Returns a sentence that has been tagged by NLTK.
 	def get_tagged_text(self, text):
 		tokenized_text = nltk.word_tokenize(text)
 		pos_tagged_text = nltk.pos_tag(text)
