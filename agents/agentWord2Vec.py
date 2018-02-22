@@ -335,7 +335,7 @@ class AgentWord2Vec:
 	# Returns a sentence that has been tagged by NLTK.
 	def get_tagged_text(self, text):
 		tokenized_text = nltk.word_tokenize(text)
-		pos_tagged_text = nltk.pos_tag(text)
+		pos_tagged_text = nltk.pos_tag(tokenized_text)
 		formatted_tagged_text = []
 		for tuple_word in pos_tagged_text:
 			formatted_tagged_text.append(tuple_word[0] + '_' + tuple_word[1])
