@@ -18,7 +18,7 @@ $ chmod +x setup.sh
 $ ./setup.sh
 ```
 
-II. Download a copy of the [scholar dependencies](https://drive.google.com/file/d/1srOUFidQ9fV240wyF7GW4eqF6raCawBV/view), extract, and move the files to autoplay/scholar. See the [scholar Github page](https://github.com/danielricks/scholar) for more information on use.
+II. Download a copy of the [scholar dependencies](https://www.dropbox.com/s/k2lxuxormpo63om/scholar_required_files.zip?dl=0), extract, and move the files to autoplay/scholar. See the [scholar Github page](https://github.com/danielricks/scholar) for more information on use.
 
 ## Agents
 
